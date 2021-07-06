@@ -17,6 +17,7 @@ allprojects {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        maven { url "https://jitpack.io" } // This is needed to install the Parse-SDK-Android as a Gradle dependency
     }
 }
 
