@@ -14,8 +14,8 @@ public class ParseApplication extends Application { // Add the android:name is n
         super.onCreate();
         // Register out parse models
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(String.valueOf(R.string.application_id))
-                .clientKey(String.valueOf(R.string.client_key))
+                .applicationId(getString(R.string.application_id))
+                .clientKey(getString(R.string.client_key))
                 .server("https://parseapi.back4app.com")
                 .build()
         );
