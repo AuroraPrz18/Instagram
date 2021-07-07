@@ -25,11 +25,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         // Check if the user is already login
         if (ParseUser.getCurrentUser() != null){
-            goMainActivity();
+           goMainActivity();
         }
     }
 
-    // Method that is called when the user try to login clicking the btnLogin
+    /** Method that is called when the user try to login clicking the btnLogin **/
     public void onClickLogin(View view) {
         // Get the information provided
         String username = binding.etUsername.getText().toString();
@@ -57,5 +57,13 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent =  new Intent(this, MainActivity.class);
         startActivity(intent);
         finish(); // To literally finish with this Activity
+    }
+
+    /**
+     * Method to navigate to the SignUp Activity
+     */
+    public void onClickSignUpLink(View view) {
+        Intent intent =  new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
 }
