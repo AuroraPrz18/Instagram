@@ -2,12 +2,20 @@ package com.codepath.aurora.instagram;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.codepath.aurora.instagram.models.Post;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        queryPosts();
     }
 
     @Override
@@ -33,5 +42,41 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /***
+     * Method called when the NewPost button inside de menu is clicked. It open the PostPhoto Activity.
+     * @param item
+     */
+    public void onClickNewPost(MenuItem item) {
+        Intent intent = new Intent(this, PostPhotoActivity.class);
+        startActivity(intent);
+    }
+
+    /***
+     * Method to get Instagram posts back from the database
+     */
+    private void queryPosts() {
+        // Specify that we are going to query the User class
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        // To include the author of the post information (access to information of other entity related with Post entity)
+        query.include(Post.KEY_USER);
+        // Retrieve all the items from the back end
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e != null){
+                    Toast.makeText(MainActivity.this, "Something went wrong with getting posts", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                for(Post post : posts){
+                    Log.i("POSTS", "Post: "+post.getDescription() + post.getUser().getUsername());
+                }
+                // Access data using the 'get' methods for the object
+                //String description = object.getDescription();
+                //ParseFile image = object.getImage();
+                //ParseUser user = object.getUser();
+            }
+        });
     }
 }
