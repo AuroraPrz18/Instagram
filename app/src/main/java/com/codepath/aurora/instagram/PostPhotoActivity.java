@@ -22,7 +22,10 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class PostPhotoActivity extends AppCompatActivity {
     ActivityPostPhotoBinding binding;
@@ -88,11 +91,26 @@ public class PostPhotoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // By this point the camera photo id on the disk
+            if (resultCode == RESULT_OK) {// By this point the camera photo id on the disk
                 // Decode the file of the photo that we just took into a bitmap
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // TODO: RESIZE BITMAP
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getPath());
+                // Resize it scaling to fit an specific width
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 100);
+                // Configure byte output stream
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                // Compress the image further
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+                try {
+                    resizedFile.createNewFile();
+                    FileOutputStream fos = new FileOutputStream(resizedFile);
+                    // Write the bytes of the bitmap to file
+                    fos.write(bytes.toByteArray());
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 // Load the taken image into a preview
                 binding.imPhoto.setImageBitmap(takenImage);
             } else { // Result was a failure

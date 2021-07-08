@@ -8,22 +8,40 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.codepath.aurora.instagram.adapters.PostsAdapter;
+import com.codepath.aurora.instagram.databinding.ActivityMainBinding;
 import com.codepath.aurora.instagram.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    ActivityMainBinding binding;
+    protected PostsAdapter adapter;
+    protected List<Post> allPosts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // queryPosts();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Initialize the list
+        allPosts = new ArrayList<>();
+        // Initialize the adapter
+        adapter = new PostsAdapter(this, allPosts);
+
+        // Set up the RecyclerView
+        binding.rvPosts.setAdapter(adapter);
+        binding.rvPosts.setLayoutManager(new LinearLayoutManager(this));
+
+        // Retrieve post from Backend
+        queryPosts();
     }
 
     @Override
@@ -61,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // To include the author of the post information (access to information of other entity related with Post entity)
         query.include(Post.KEY_USER);
+        // Set limit to the last 20 posts
+        query.setLimit(20);
+        // Set order them by creation date (desc)
+        query.addDescendingOrder("createdAt");
         // Retrieve all the items from the back end
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -69,13 +91,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Something went wrong with getting posts", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                for(Post post : posts){
-                    Log.i("POSTS", "Post: "+post.getDescription() + post.getUser().getUsername());
+                // for debugging purposes let's print every post description to logcat
+                for (Post post : posts) {
+                    Log.i("POSTS", "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
-                // Access data using the 'get' methods for the object
-                //String description = object.getDescription();
-                //ParseFile image = object.getImage();
-                //ParseUser user = object.getUser();
+                // Save received posts
+                allPosts.addAll(posts);
+                // Notify adapter of data change
+                adapter.notifyDataSetChanged();
             }
         });
     }
