@@ -13,6 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Instagram">
+
+        <!-- wrap the File object as a content provider (content://) using the FileProvider class, for security reasons -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.codepath.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
+
         <activity android:name=".PostPhotoActivity"></activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
