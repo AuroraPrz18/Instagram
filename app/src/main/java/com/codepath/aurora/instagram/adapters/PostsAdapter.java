@@ -51,6 +51,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return posts.size();
     }
 
+    /**
+     * Method to clean all the elements of the recycler view.
+     */
+    public void clear(){
+        posts.clear();
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Add a new list of items
+     * @param list
+     */
+    public void addAll(List<Post> list){
+        posts.addAll(list);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
         ItemPostBinding binding;
 

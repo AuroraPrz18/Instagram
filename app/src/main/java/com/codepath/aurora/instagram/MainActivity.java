@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.aurora.instagram.adapters.PostsAdapter;
 import com.codepath.aurora.instagram.databinding.ActivityMainBinding;
@@ -42,6 +43,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Retrieve post from Backend
         queryPosts();
+
+        // Set up the SwipeRefreshLayout
+        setUpSwipeRefreshLayout();
+    }
+
+    private void setUpSwipeRefreshLayout() {
+        // When the layout is refreshed
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Clear old posts
+                adapter.clear();
+                // Retrieve post from the server
+                queryPosts();
+            }
+        });
+        // Configure the refreshing colors
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override
@@ -96,9 +118,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("POSTS", "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
                 // Save received posts
-                allPosts.addAll(posts);
+                allPosts.addAll(posts); // adapter.addAll();
                 // Notify adapter of data change
                 adapter.notifyDataSetChanged();
+                // Now we call setRefreshing(false) to signal refresh has finished
+                binding.swipeContainer.setRefreshing(false);
             }
         });
     }
