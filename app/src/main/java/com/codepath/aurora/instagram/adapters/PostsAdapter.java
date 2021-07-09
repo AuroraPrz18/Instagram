@@ -82,7 +82,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
 
         /***
-         * Bind the information on a given Post to a view that will appear in the RecyclerView
+         * Bind the information of a given Post to a view that will appear in the RecyclerView
          * @param post
          */
         public void bind(Post post) {

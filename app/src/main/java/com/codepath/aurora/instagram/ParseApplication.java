@@ -2,6 +2,7 @@ package com.codepath.aurora.instagram;
 
 import android.app.Application;
 
+import com.codepath.aurora.instagram.models.Comment;
 import com.codepath.aurora.instagram.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -15,8 +16,10 @@ public class ParseApplication extends Application { // Add the android:name is n
     public void onCreate() {
         super.onCreate();
 
-        // Register User parse model - This is needed to query or set data on the Post model
+        // Register Post parse model - This is needed to query or set data on the Post model
         ParseObject.registerSubclass(Post.class);
+        // Register Comment parse model
+        ParseObject.registerSubclass(Comment.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getString(R.string.application_id))

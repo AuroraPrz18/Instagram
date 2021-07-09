@@ -2,7 +2,6 @@ package com.codepath.aurora.instagram;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -116,10 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 if(e != null){
                     Toast.makeText(MainActivity.this, "Something went wrong with getting posts", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                // for debugging purposes let's print every post description to logcat
-                for (Post post : posts) {
-                    Log.i("POSTS", "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
                 // Save received posts
                 allPosts.addAll(posts); // adapter.addAll();
