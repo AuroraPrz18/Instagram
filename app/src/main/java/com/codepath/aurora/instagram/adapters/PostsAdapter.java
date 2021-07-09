@@ -1,6 +1,7 @@
 package com.codepath.aurora.instagram.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.aurora.instagram.PostDetails;
 import com.codepath.aurora.instagram.R;
 import com.codepath.aurora.instagram.databinding.ItemPostBinding;
 import com.codepath.aurora.instagram.models.Post;
 import com.parse.ParseFile;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -91,7 +95,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }else{
                 Glide.with(context).load("");
             }
-
+            // Set onClickListener to the item
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PostDetails.class);
+                    intent.putExtra("Post", Parcels.wrap(post));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
