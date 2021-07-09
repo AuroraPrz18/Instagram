@@ -2,6 +2,7 @@ package com.codepath.aurora.instagram.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public void bind(Post post) {
             // Set the user name and description to the item post
             binding.tvUserName.setText(post.getUser().getUsername());
-            binding.tvDescription.setText(post.getDescription());
+            String description = "<b>" + post.getUser().getUsername() + "</b> " +post.getDescription();
+            binding.tvDescription.setText(Html.fromHtml(description));
+            binding.tvTimestamp.setText(Post.getTimestamp(post.getCreatedAt()));
             // Set the image of the Post if it is not null
             ParseFile image = post.getImage();
             if(image != null){

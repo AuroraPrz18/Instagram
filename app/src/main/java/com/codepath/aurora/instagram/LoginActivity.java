@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         if (ParseUser.getCurrentUser() != null){
            goMainActivity();
         }
+
     }
 
     /** Method that is called when the user try to login clicking the btnLogin **/

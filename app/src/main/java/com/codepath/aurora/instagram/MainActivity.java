@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the SwipeRefreshLayout
         setUpSwipeRefreshLayout();
+
+        // Set the toolbar to act as the ActionBar
+        setSupportActionBar(findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void setUpSwipeRefreshLayout() {

@@ -12,6 +12,7 @@
         android:contentDescription="Log out"
         android:icon="@android:drawable/ic_menu_set_as"
         android:onClick="onClickLogOut"
+        android:iconTint="@color/black"
         android:title="LogOut"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>
