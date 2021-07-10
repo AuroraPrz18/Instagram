@@ -17,6 +17,7 @@ public class Post extends ParseObject {
 
     // Define the keys that exactly match with each column name that is in the entity
     public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_LIKE = "likesCount";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
 
@@ -29,6 +30,17 @@ public class Post extends ParseObject {
     public void setDescription(String description){
         // Associate a key description with its description
         put( KEY_DESCRIPTION, description );
+    }
+
+    public int getLike(){
+        // Call the getString() method already defined in the ParseObject class
+        // Return the description
+        return (int)getNumber( KEY_DESCRIPTION );
+    }
+
+    public void setLike(int likes){
+        // Associate a key description with its description
+        put( KEY_LIKE, (Number) likes );
     }
 
     public ParseFile getImage(){

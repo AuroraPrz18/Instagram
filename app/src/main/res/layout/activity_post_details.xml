@@ -44,6 +44,7 @@
                     android:layout_height="50dp"
                     android:background="@color/white"
                     android:contentDescription="Like"
+                    android:onClick="onClickLike"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_below="@+id/ivPost"
@@ -85,6 +86,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ufi_save" />
+            <TextView
+                android:id="@+id/tvLikes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_below="@+id/ibLike"
+                android:text="Liked by 0"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -92,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_below="@+id/ibLike"
+                android:layout_below="@+id/tvLikes"
                 android:text="Desdoisahdfisahiofhdaoifhsdidadhnaspidjhsapdfhpsadsdsjdsfgjpdsfjpsdfjpodsf"
                 android:textColor="#000000"
                 android:textSize="16sp"
@@ -117,8 +129,6 @@
                 android:layout_below="@+id/tvTimestamp"
                 android:layout_above="@+id/etComment"
                 />
-
-
 
                 <EditText
                     android:id="@+id/etComment"
